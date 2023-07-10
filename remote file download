@@ -1,0 +1,37 @@
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Check if a file URL is provided
+    if (isset($_POST['file_url']) && !empty($_POST['file_url'])) {
+        $fileUrl = $_POST['file_url'];
+
+        // Get the file name from the URL
+        $fileName = basename($fileUrl);
+
+        // Specify the path where the file should be saved locally
+        $savePath = 'path/to/save/' . $fileName;
+
+        // Download the file from the remote URL and save it locally
+        if (file_put_contents($savePath, file_get_contents($fileUrl))) {
+            echo "File downloaded successfully!";
+        } else {
+            echo "Error downloading the file.";
+        }
+    } else {
+        echo "Please provide a file URL.";
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>File Downloader</title>
+</head>
+<body>
+    <form method="POST" action="">
+        <label for="file_url">File URL:</label>
+        <input type="text" name="file_url" id="file_url" required>
+        <button type="submit">Download</button>
+    </form>
+</body>
+</html>
